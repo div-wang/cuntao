@@ -194,7 +194,7 @@
       if (is_weChat() || is_qq()) {
         $getName('.layer').style.display = 'block'
       } else {
-        if (url != "" && url.indexOf('http') > -1) {
+        if (url != "" && url.toLowerCase().indexOf('http') > -1) {
           location.href = url
         } else {
           window.close()

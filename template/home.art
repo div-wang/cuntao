@@ -167,9 +167,9 @@
 
     qr.callback = (err, res) => {
       if(res){
-        let url = res.result
+        let url = res.result.toLowerCase()
         if (url) {
-          axios.get('/api/setCunTaoUrl',{
+          axios.get('/api/setCunTaoUrl', {
             params: {
               url: url
             }
