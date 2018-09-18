@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no'/>
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_648886_pgg4jms09fl.css">
+  <link rel="icon" href="//oss-img.u-bx.com/images/home/favicon.ico" type="image/x-icon">
+  <title>二维码数据转换</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background-color: #F7F7F7;
+    }
+    a {
+      color: #0366d6;
+    }
+    #shengming {
+      color: #999;
+      font-size: 12px;
+      margin: 20px;
+    }
+
+    #signture {
+      margin: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+    #content {
+      padding: 30px 0 100px;
+      background-size: cover;
+      background-image: url("https://img.alicdn.com/tps/TB1h9xxIFXXXXbKXXXXXXXXXXXX.jpg");
+    }
+    #content h2 {
+      color: #fff;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(255,255,255,.25);
+    }
+    #content h5 {
+      color: rgba(255,255,255,.75);
+      text-align: center;
+      margin: 30px auto;
+      text-shadow: 1px 1px 2px rgba(0,0,0,.25);
+    }
+    #content #button {
+      display: none;
+      width: 300px;
+      text-align: center;
+      margin: 30px auto;
+    }
+    #content #button span:first-child{
+      margin-right: 20px;
+    }
+    #content #button span {
+      display: inline-block;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #dcdfe6;
+      border-color: #dcdfe6;
+      color: #606266;
+      -webkit-appearance: none;
+      text-align: center;
+      box-sizing: border-box;
+      outline: none;
+      margin: 0;
+      transition: .1s;
+      font-weight: 500;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      padding: 12px 20px;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+    #content #button span.primary {
+      color: #fff;
+      background-color: #409eff;
+      border-color: #409eff;
+    }
+    #content #preview {
+      cursor: pointer;
+      border: 1px solid #fff;
+      background-color: #fff;
+      max-width: 280px;
+      min-height: 180px;
+      margin:0 auto;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 100px;
+    #content #preview > img {
+      display: block;
+      width: 120px;
+      margin:80px;
+    }
+    #jump .layer {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding-left: 10%;
+        position: fixed;
+        background-color: rgba(0,0,0,.7);
+    }
+    #jump .layer img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="content">
+      <h2>请上传您的二维码图片</h2>
+      <h5 id="link">这里显示您的短链接</h5>
+      <div id="button">
+        <span class="primary" onclick="copyUrl()">复制链接</span>
+      </div>
+      <input id="upload" type="file" style="display: none" ref="upload">
+      <div id="preview" onclick="uploadFn()" ref="preview">
+        <img src="https://zos.alipayobjects.com/cmsmng/cms/images/ixszvlta/df0ea6a6-170a-4b76-ba00-8c9b860d32a3.png" alt="" ref="image">
+      </div>
+    </div>
+  </div>
+  <div id="shengming">免责声明: 该网站为实验性质，和微信、支付宝、淘宝没有任何关系，如有侵权，请联系 <a href="//div-wang.com">Div-wang</a></div>
+  <script src="//div-1255800596.cos.ap-beijing.myqcloud.com/js/qrcode.js"></script>
+  <script src="//unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+    var $getId = function (id) {
+      return document.getElementById(id);
+    }
+    var $getName = function (className) {
+      var arr = document.querySelectorAll(className)
+      return arr.length === 1 ? arr[0] : arr;
+    }
+    let shareLink = ''
+    let qr = new QrCode()
+    let upload = $getId('upload')
+
+    const uploadFn = () => {
+      upload.click()
+    }
+    const copyUrl = () => {
+      try {
+        var input = $getId('copyInput')
+        input.value = shareLink
+        input.focus()
+        input.select()
+        if (document.execCommand('copy', false, null)) {
+          alert('复制成功')
+        } else {
+          alert('当前浏览器不支持复制操作，请使用Ctrl+c手动复制')
+        }
+      } catch (e) {
+        alert('复制出错')
+      }
+    }
+
+    qr.callback = (err, res) => {
+      if(res){
+        let url = res.result
+        if (url) {
+          axios.get('/api/setCunTaoUrl',{
+            params: {
+              url: url
+            }
+          }).then(res => {
+            console.log(res.data)
+            shareLink = 'https://cun.ie34.com/u/:id' + res.data._id
+            $getId('link').innerHTML = shareLink
+          })
+        } else {
+          alert('无效二维码')
+        }
+      } else {
+        alert('二维码无法识别，请换一个二维码')
+        console.error(err)
+      }
+    }
+
+    upload.addEventListener('change', function() {
+      for (var i = 0; i < this.files.length; i++) {
+        var file = this.files[i];
+        if (!/^image\//.test(file.type)) {
+            alert('请上传二维码图片')
+            return false
+        }
+        // Read file
+        var reader = new FileReader();
+        reader.addEventListener('load', function() {
+          let img = $getName('img')
+          img.style.margin = '20px'
+          img.style.width = '240px'
+          img.src = this.result
+          // Analyse code
+          qr.decode(this.result);
+        }.bind(reader), false);
+        reader.readAsDataURL(file);
+      }
+    }, false);
+  </script>
+</body>
+
+</html>
