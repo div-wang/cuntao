@@ -34,7 +34,7 @@ var credentials = {
 };
 https.createServer(credentials, app.callback()).listen(3011);
 
-logger.info('listen: 3050');
+logger.info('listen: 3010');
 
 
 

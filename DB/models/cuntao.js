@@ -5,11 +5,6 @@ var cuntao = require('../schema/cuntao');
  * @param {String} id
  */
 exports.get = function (_id) {
-  // return new Promise(() = {
-  //   cuntao.findOne({ _id }, () => {
-
-  //   })
-  // })
   return cuntao.findOne({ _id }).exec()
 };
 

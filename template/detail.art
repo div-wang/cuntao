@@ -17,7 +17,6 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     html {
       background-color: #F7F7F7;
     }
@@ -29,79 +28,10 @@
       font-size: 12px;
       margin: 20px;
     }
-
     #signture {
       margin: 20px;
       color: #666;
       font-size: 14px;
-    }
-    #content {
-      padding: 30px 0 100px;
-      background-size: cover;
-      background-image: url("https://img.alicdn.com/tps/TB1h9xxIFXXXXbKXXXXXXXXXXXX.jpg");
-    }
-    #content h2 {
-      color: #fff;
-      text-align: center;
-      text-shadow: 1px 1px 2px rgba(255,255,255,.25);
-    }
-    #content h5 {
-      color: rgba(255,255,255,.75);
-      text-align: center;
-      margin: 30px auto;
-      text-shadow: 1px 1px 2px rgba(0,0,0,.25);
-    }
-    #content #button {
-      display: none;
-      width: 300px;
-      text-align: center;
-      margin: 30px auto;
-    }
-    #content #button span:first-child{
-      margin-right: 20px;
-    }
-    #content #button span {
-      display: inline-block;
-      line-height: 1;
-      white-space: nowrap;
-      cursor: pointer;
-      background: #fff;
-      border: 1px solid #dcdfe6;
-      border-color: #dcdfe6;
-      color: #606266;
-      -webkit-appearance: none;
-      text-align: center;
-      box-sizing: border-box;
-      outline: none;
-      margin: 0;
-      transition: .1s;
-      font-weight: 500;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      padding: 12px 20px;
-      font-size: 14px;
-      border-radius: 4px;
-    }
-    #content #button span.primary {
-      color: #fff;
-      background-color: #409eff;
-      border-color: #409eff;
-    }
-    #content #preview {
-      cursor: pointer;
-      border: 1px solid #fff;
-      background-color: #fff;
-      max-width: 280px;
-      min-height: 180px;
-      margin:0 auto;
-      border-radius: 10px;
-      text-align: center;
-      font-size: 100px;
-    #content #preview > img {
-      display: block;
-      width: 120px;
-      margin:80px;
     }
     #jump .layer {
         top: 0;

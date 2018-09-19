@@ -97,22 +97,11 @@
       border-radius: 10px;
       text-align: center;
       font-size: 100px;
+    }
     #content #preview > img {
       display: block;
       width: 120px;
       margin:80px;
-    }
-    #jump .layer {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        padding-left: 10%;
-        position: fixed;
-        background-color: rgba(0,0,0,.7);
-    }
-    #jump .layer img {
-      width: 100%;
     }
   </style>
 </head>
