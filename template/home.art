@@ -44,10 +44,14 @@
       text-align: center;
       text-shadow: 1px 1px 2px rgba(255,255,255,.25);
     }
-    #content h5 {
-      color: rgba(255,255,255,.75);
+    #content #link {
+      display: block;
+      width: 300px;
       text-align: center;
       margin: 30px auto;
+      color: rgba(255,255,255,.75);
+      border: none;
+      background: none;
       text-shadow: 1px 1px 2px rgba(0,0,0,.25);
     }
     #content #button {
@@ -55,9 +59,6 @@
       width: 300px;
       text-align: center;
       margin: 30px auto;
-    }
-    #content #button span:first-child{
-      margin-right: 20px;
     }
     #content #button span {
       display: inline-block;
@@ -110,19 +111,20 @@
   <div id="app">
     <div id="content">
       <h2>请上传您的二维码图片</h2>
-      <h5 id="link">这里显示您的短链接</h5>
+      <input id="link" placeholder="这里显示您的短链接"></input>
       <div id="button">
         <span class="primary" onclick="copyUrl()">复制链接</span>
       </div>
-      <input id="upload" type="file" style="display: none" ref="upload">
+      <input id="upload" type="file" style="display: none">
       <div id="preview" onclick="uploadFn()" ref="preview">
         <img src="https://zos.alipayobjects.com/cmsmng/cms/images/ixszvlta/df0ea6a6-170a-4b76-ba00-8c9b860d32a3.png" alt="" ref="image">
       </div>
     </div>
   </div>
+  <input id="copyInput" type="text" style="display: none">
   <div id="shengming">免责声明: 该网站为实验性质，和微信、支付宝、淘宝没有任何关系，如有侵权，请联系 <a href="//div-wang.com">Div-wang</a></div>
   <script src="//div-1255800596.cos.ap-beijing.myqcloud.com/js/qrcode.js"></script>
-  <script src="//unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
   <script type="text/javascript">
     var $getId = function (id) {
       return document.getElementById(id);
@@ -135,13 +137,12 @@
     let qr = new QrCode()
     let upload = $getId('upload')
 
-    const uploadFn = () => {
+    var uploadFn = () => {
       upload.click()
     }
-    const copyUrl = () => {
+    var copyUrl = () => {
       try {
-        var input = $getId('copyInput')
-        input.value = shareLink
+        var input = $getId('link')
         input.focus()
         input.select()
         if (document.execCommand('copy', false, null)) {
@@ -163,9 +164,9 @@
               url: url
             }
           }).then(res => {
-            console.log(res.data)
-            shareLink = 'https://cun.ie34.com/u/:id' + res.data._id
-            $getId('link').innerHTML = shareLink
+            shareLink = 'https://cun.ie34.com/u/' + res.data.id
+            $getId('link').value = shareLink
+            $getId('button').style.display = 'block'
           })
         } else {
           alert('无效二维码')
